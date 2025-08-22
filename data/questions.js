@@ -1172,7 +1172,7 @@ public static void main(String[] args) {
       "planets, Earth, 1",
       "[LPlanets.Planet;@..., Earth, 1",
       "[LPlanets.Planet;@..., Planets.Planet@..., 1",
-      "..."
+      "Compilation fails"
     ],
     correct: 2,
     explanation: "System.out.println(planets): planets is an array object. When an array is printed directly, it calls the default toString method, which produces a string representing the object's type and memory address (e.g., [LPlanets.Planet;@15db9742). [L indicates an array of objects. System.out.println(planets[2]): planets[2] is the third element, a Planet object (new Planet(\"Earth\", 1)). The Planet class does not override toString(), so the default Object.toString() is used, which again prints the class name and hash code (e.g., Planets.Planet@6d06d69c). System.out.println(planets[2].moons): This accesses the moons field of the third Planet object. This field was initialized to 1. This will print the integer 1."
