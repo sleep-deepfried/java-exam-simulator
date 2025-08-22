@@ -108,18 +108,15 @@ public static void main(String[] args) {
     System.out.println(acct.getAmount());
 }`,
     options: [
-      "this.amount = 0;",
-      "amount = 0;",
-      "acct(0);",
       "acct.amount = 0;",
-      "acct.getAmount() = 0;",
-      "acct.changeAmount(0);",
+      "this.amount = 0;",
       "acct.changeAmount(-acct.amount);",
-      "acct.changeAmount(-acct.getAmount());"
+      "acct.changeAmount(-acct.getAmount());",
+      "acct.getAmount() = 0;"
     ],
     isMultipleChoice: true,
-    correct: [3, 6, 7], // D, G, H
-    explanation: "D works because the amount field is public, allowing direct modification. G works because the changeAmount(int x) method adds x to the current amount. By passing the negative of the current amount, the result is amount + (-amount), which is 0. H is functionally identical to G, as getAmount() returns the value of the amount field."
+    correct: [0, 2, 3], // A, C, D
+    explanation: "A works because the amount field is public, allowing direct modification. C works because the changeAmount(int x) method adds x to the current amount. By passing the negative of the current amount, the result is amount + (-amount), which is 0. D is functionally identical to C, as getAmount() returns the value of the amount field."
   },
 
   // Question 16
@@ -791,7 +788,7 @@ System.out.println("5 + 2 = " + (3 + 4));`,
       "5 + 2 = 34, 5 + 2 = 34",
       "5 + 2 = 34, 5 + 2 = 7",
       "7 = 7, 7 + 7",
-      "5 + 2 = 34, 5 + 2 = 7"
+      "5 + 2 = 7, 5 + 2 = 34"
     ],
     correct: 1,
     explanation: "First line: \"5 + 2 = \" + 3 + 4. The + operator is evaluated from left to right. \"5 + 2 = \" + 3 results in string concatenation, producing the string \"5 + 2 = 3\". \"5 + 2 = 3\" + 4 is also string concatenation, producing \"5 + 2 = 34\". Second line: \"5 + 2 = \" + (3 + 4). The parentheses () cause the expression inside to be evaluated first. 3 + 4 results in integer addition, which is 7. The expression becomes \"5 + 2 = \" + 7. This is string concatenation, producing \"5 + 2 = 7\"."
