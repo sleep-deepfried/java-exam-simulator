@@ -8,7 +8,7 @@ export default function Quiz() {
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState({})
-  const [timeRemaining, setTimeRemaining] = useState(3600) // 60 minutes
+
   const [showConfirm, setShowConfirm] = useState(false)
   const [quizStarted, setQuizStarted] = useState(false)
 
@@ -31,21 +31,9 @@ export default function Quiz() {
     }
   }, [router.query])
 
-  // Timer effect
-  useEffect(() => {
-    if (timeRemaining > 0 && quizStarted) {
-      const timer = setTimeout(() => setTimeRemaining(timeRemaining - 1), 1000)
-      return () => clearTimeout(timer)
-    } else if (timeRemaining === 0) {
-      handleSubmitQuiz()
-    }
-  }, [timeRemaining, quizStarted])
 
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60)
-    const remainingSeconds = seconds % 60
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
-  }
+
+
 
   const handleAnswerSelect = (questionId, answerIndex) => {
     const question = questions.find(q => q.id === questionId)
@@ -98,7 +86,7 @@ export default function Quiz() {
     const results = {
       answers,
       questions,
-      timeUsed: 3600 - timeRemaining,
+      timeUsed: 0, // Timer removed
       totalQuestions: questions.length
     }
     
@@ -159,9 +147,9 @@ export default function Quiz() {
             </div>
             <div className="text-right">
               <div className="text-2xl font-mono font-bold text-exam-blue mb-1">
-                {formatTime(timeRemaining)}
+                {questions.length} Questions
               </div>
-              <p className="text-sm text-gray-600">Time Remaining</p>
+              <p className="text-sm text-gray-600">Total Questions</p>
             </div>
           </div>
           
@@ -247,11 +235,27 @@ export default function Quiz() {
 
               {/* Options */}
               <div className="space-y-3 mb-8">
+                {/* Question Type Indicator */}
+                {Array.isArray(currentQuestion.correct) ? (
+                  <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p className="text-sm text-blue-700 font-medium">
+                      📋 Multiple Choice: Select all correct answers ({currentQuestion.correct.length} required)
+                    </p>
+                  </div>
+                ) : (
+                  <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                    <p className="text-sm text-green-700 font-medium">
+                      🎯 Single Choice: Select one answer
+                    </p>
+                  </div>
+                )}
+
                 {currentQuestion.options.map((option, index) => {
                   const answer = answers[currentQuestion.id]
                   const isSelected = Array.isArray(answer)
                     ? answer.includes(index)
                     : answer === index
+                  const isMultipleChoice = Array.isArray(currentQuestion.correct)
 
                   return (
                     <button
@@ -263,9 +267,20 @@ export default function Quiz() {
                       `}
                     >
                       <div className="flex items-center">
-                        <span className="w-6 h-6 rounded-full border-2 border-current mr-3 flex items-center justify-center text-sm font-bold">
-                          {String.fromCharCode(65 + index)}
-                        </span>
+                        {isMultipleChoice ? (
+                          // Checkbox style for multiple choice
+                          <div className={`
+                            w-6 h-6 border-2 border-current mr-3 flex items-center justify-center text-sm font-bold
+                            ${isSelected ? 'bg-current text-white' : 'bg-white'}
+                          `}>
+                            {isSelected ? '✓' : String.fromCharCode(65 + index)}
+                          </div>
+                        ) : (
+                          // Radio button style for single choice
+                          <span className="w-6 h-6 rounded-full border-2 border-current mr-3 flex items-center justify-center text-sm font-bold">
+                            {String.fromCharCode(65 + index)}
+                          </span>
+                        )}
                         <span>{option}</span>
                       </div>
                     </button>

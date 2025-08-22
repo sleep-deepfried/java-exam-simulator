@@ -4,7 +4,7 @@ import { topics } from '../data/questions'
 
 export default function Home() {
   const [selectedTopics, setSelectedTopics] = useState(topics.map(topic => topic))
-  const [numQuestions, setNumQuestions] = useState(56)
+  const [numQuestions, setNumQuestions] = useState(64)
 
   const toggleTopic = (topic) => {
     setSelectedTopics(prev => 
@@ -97,7 +97,7 @@ export default function Home() {
                     <option value={10}>10 Questions</option>
                     <option value={20}>20 Questions</option>
                     <option value={30}>30 Questions</option>
-                    <option value={56}>56 Questions (Full Exam)</option>
+                    <option value={64}>64 Questions (Full Exam)</option>
                   </select>
                 </div>
 
