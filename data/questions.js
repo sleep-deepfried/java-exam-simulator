@@ -612,7 +612,7 @@ System.out.println("date3 = " + date3);`,
   // Question 35
   {
     id: 25,
-    topic: "Methods and Encapsulation",
+    topic: "Methods and Encapsulation", 
     question: "Given the Test class with static and instance variables, what is the result?",
     code: `public class Test {
     static int count = 0;
@@ -696,7 +696,7 @@ System.out.println("date3 = " + date3);`,
       "StringBuilder sb = new StringBuilder(creditCard); sb.substring(15, 19); return x + sb;",
       "return x + creditCard.substring(15, 19);",
       "StringBuilder sb = new StringBuilder(x); sb.append(creditCard, 15, 19); return sb.toString();",
-      "StringBuilder sb = new StringBuilder(creditCard); ..."
+      "StringBuilder sb = new StringBuilder(creditCard); return sb.substring(0, 15) + sb.substring(15);"
     ],
     isMultipleChoice: true,
     correct: [1, 2], // B, C
@@ -1131,7 +1131,7 @@ for (int i = 0; i < num.length; i++) {
       "num[0][0]=10, num[0][1]=10, num[0][2]=10",
       "num[0][0]=10, num[1][0]=10, num[2][0]=10",
       "num[0][0]=10, num[0][1]=0, num[0][2]=0",
-      "num[0][0]=10, ... num[1][0]=0, ..."
+      "A compilation error occurs"
     ],
     correct: 0,
     explanation: "int num[][] = new int[1][3]; creates a 2D array with 1 row and 3 columns. The outer loop runs for i = 0 (since num.length is 1). The inner loop runs for j = 0, j = 1, and j = 2 (since num[0].length is 3). In each iteration of the inner loop, the corresponding element is set to 10. This results in num[0][0] = 10, num[0][1] = 10, and num[0][2] = 10."
@@ -1596,7 +1596,7 @@ public static void main(String[] args) {
 
 export const topics = [
   "Inheritance",
-  "Package and Imports", 
+  "Package and Imports",
   "Object-Oriented Programming",
   "Arrays",
   "Methods and Encapsulation",
