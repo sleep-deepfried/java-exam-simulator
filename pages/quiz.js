@@ -90,13 +90,28 @@ export default function Quiz() {
     return questions.filter(q => !(q.id in answers))
   }
 
-  if (!quizStarted || questions.length === 0) {
+  if (!quizStarted) {
     return (
       <div className="quiz-container">
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-exam-blue mx-auto mb-4"></div>
             <p className="text-gray-600">Loading quiz questions...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (questions.length === 0) {
+    return (
+      <div className="quiz-container">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <p className="text-gray-600 mb-4">No questions available for the selected topics.</p>
+            <Link href="/" className="text-exam-blue hover:underline">
+              Return to home
+            </Link>
           </div>
         </div>
       </div>
