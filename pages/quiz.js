@@ -48,10 +48,34 @@ export default function Quiz() {
   }
 
   const handleAnswerSelect = (questionId, answerIndex) => {
-    setAnswers(prev => ({
-      ...prev,
-      [questionId]: answerIndex
-    }))
+    const question = questions.find(q => q.id === questionId)
+    const isMultiple = Array.isArray(question.correct)
+
+    setAnswers(prev => {
+      const current = prev[questionId]
+
+      if (isMultiple) {
+        let selections = Array.isArray(current) ? [...current] : []
+
+        if (selections.includes(answerIndex)) {
+          selections = selections.filter(i => i !== answerIndex)
+        } else {
+          const maxSelections = question.correct.length
+          if (selections.length < maxSelections) {
+            selections.push(answerIndex)
+          }
+        }
+
+        if (selections.length === 0) {
+          const { [questionId]: _, ...rest } = prev
+          return rest
+        }
+
+        return { ...prev, [questionId]: selections }
+      }
+
+      return { ...prev, [questionId]: answerIndex }
+    })
   }
 
   const handleNext = () => {
@@ -83,20 +107,37 @@ export default function Quiz() {
   }
 
   const getAnsweredCount = () => {
-    return Object.keys(answers).length
+    return Object.values(answers).filter(ans =>
+      Array.isArray(ans) ? ans.length > 0 : ans !== undefined
+    ).length
   }
 
   const getUnansweredQuestions = () => {
     return questions.filter(q => !(q.id in answers))
   }
 
-  if (!quizStarted || questions.length === 0) {
+  if (!quizStarted) {
     return (
       <div className="quiz-container">
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-exam-blue mx-auto mb-4"></div>
             <p className="text-gray-600">Loading quiz questions...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (questions.length === 0) {
+    return (
+      <div className="quiz-container">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <p className="text-gray-600 mb-4">No questions available for the selected topics.</p>
+            <Link href="/" className="text-exam-blue hover:underline">
+              Return to home
+            </Link>
           </div>
         </div>
       </div>
@@ -206,23 +247,30 @@ export default function Quiz() {
 
               {/* Options */}
               <div className="space-y-3 mb-8">
-                {currentQuestion.options.map((option, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleAnswerSelect(currentQuestion.id, index)}
-                    className={`
-                      option-button text-base
-                      ${answers[currentQuestion.id] === index ? 'option-selected' : ''}
-                    `}
-                  >
-                    <div className="flex items-center">
-                      <span className="w-6 h-6 rounded-full border-2 border-current mr-3 flex items-center justify-center text-sm font-bold">
-                        {String.fromCharCode(65 + index)}
-                      </span>
-                      <span>{option}</span>
-                    </div>
-                  </button>
-                ))}
+                {currentQuestion.options.map((option, index) => {
+                  const answer = answers[currentQuestion.id]
+                  const isSelected = Array.isArray(answer)
+                    ? answer.includes(index)
+                    : answer === index
+
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => handleAnswerSelect(currentQuestion.id, index)}
+                      className={`
+                        option-button text-base
+                        ${isSelected ? 'option-selected' : ''}
+                      `}
+                    >
+                      <div className="flex items-center">
+                        <span className="w-6 h-6 rounded-full border-2 border-current mr-3 flex items-center justify-center text-sm font-bold">
+                          {String.fromCharCode(65 + index)}
+                        </span>
+                        <span>{option}</span>
+                      </div>
+                    </button>
+                  )
+                })}
               </div>
 
               {/* Navigation */}

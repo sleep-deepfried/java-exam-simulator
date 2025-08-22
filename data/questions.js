@@ -41,7 +41,7 @@ class Earth extends Planet {
       "Make the method at line n3 protected",
       "Make the method at line n4 public"
     ],
-    correct: 2, // Represents both C and D are correct
+    correct: [2, 3],
     explanation: "An overriding method cannot have a more restrictive access modifier than the method it is overriding. In the Earth class, revolve() can be protected (same) or public (less restrictive). rotate() is an implementation of an abstract method and follows the same rule; since the default access for an abstract method in a class is package-private, protected and public are valid."
   },
 
@@ -108,7 +108,7 @@ public class Test {
       "Replace line 4 with throw new IOException(\"Exception raised\");",
       "At line 11, insert throw new IOException();"
     ],
-    correct: 0, // Represents both A and C are correct
+    correct: [0, 2],
     explanation: "The method printFileContent throws a checked IOException. Therefore, the method signature must declare this with throws IOException. Additionally, the main method, which calls printFileContent, must either handle this exception with a try-catch block or declare that it also throws the exception."
   },
 
@@ -312,7 +312,7 @@ public static void main(String[] args) {
       "acct.changeAmount(-acct.amount);",
       "acct.changeAmount(-acct.getAmount());"
     ],
-    correct: 3, // Represents D, G, H are correct
+    correct: [3, 6, 7],
     explanation: "D directly sets the public amount field to 0. G calculates the negative of the current amount and adds it, resulting in 0. H does the same as G, using the getter method."
   },
 
@@ -458,7 +458,7 @@ public static void main(String[] args) {
       "Replace line n1 with: name = \"Joe\"; contract = TRUE; salary = 100.0f;",
       "Replace line n1 with: this(\"Joe\", true, 100);"
     ],
-    correct: 0, // Represents A and C are correct
+    correct: [0, 2],
     explanation: "A sets the instance variables directly on the created object e. C initializes the instance variables within the constructor."
   },
 
@@ -604,7 +604,7 @@ class C extends B {
       "Improves the program structure because exceptions must be handled in the method in which they occurred",
       "Allows the creation of new exceptions that are tailored to the particular program being created"
     ],
-    correct: 0, // Represents A, C, E are correct
+    correct: [0, 2, 4],
     explanation: "The Java exception handling mechanism separates error-handling code from the main logic, allows developers to decide where to handle exceptions, and supports the creation of custom exception types."
   },
 
@@ -722,7 +722,7 @@ System.out.print(str1 == str2);`,
       "if (qty > 80 && qty < 90) { discount = 0.2; } else { discount = 0; } if (qty >= 90) { discount = 0.5; } else { discount = 0; }",
       "discount = (qty > 80) ? 0.2 : (qty >= 90) ? 0.5 : 0;"
     ],
-    correct: 0, // Represents A and C are correct
+    correct: [0, 2],
     explanation: "A uses two separate if statements that correctly set the discount based on the conditions. C uses a nested ternary operator that correctly reflects the logic."
   },
 
@@ -765,7 +765,7 @@ System.out.print(str1 == str2);`,
       "Object is the root class of all other objects",
       "A main method must be declared in every class"
     ],
-    correct: 1, // Represents B, C, E are correct
+    correct: [1, 2, 4],
     explanation: "B: Inheritance is a core OOP feature. C: Objects of the same class share methods (behaviors). E: In Java, Object is the ultimate superclass of all other classes."
   },
 
@@ -1145,7 +1145,7 @@ public static void main(String[] args) {
       "for (int i=0; i < intArr.length; i++) { System.out.print(i + \" \"); }",
       "for (int i=0; i < intArr.length; i++) { System.out.print(intArr[i] + \" \"); }"
     ],
-    correct: 1, // Represents B and E are correct
+    correct: [1, 4],
     explanation: "B correctly uses the enhanced for loop to iterate through the values of the array. E uses a standard for loop with an index to access and print each element."
   },
 
@@ -1204,7 +1204,7 @@ class A {
       "Requirement 1 can be implemented by using the enhanced for loop",
       "Requirement 3 CANNOT be implemented by using either the enhanced for loop or the standard for loop"
     ],
-    correct: 1, // Represents B and D are correct
+    correct: [1, 3],
     explanation: "The standard for loop provides full control over the iteration (start, end, step), so it can implement all three requirements. The enhanced for loop iterates through all elements from beginning to end, so it can only satisfy requirement 1."
   },
 
@@ -1328,7 +1328,7 @@ class A {
       "Double x = 1;",
       "Integer x = new Integer(\"1\");"
     ],
-    correct: 0, // Represents A, B, F are correct
+    correct: [0, 1, 5],
     explanation: "switch statements support byte, short, char, int, and their wrapper classes, as well as enum and String. Long and Double are not supported."
   },
 
@@ -1399,7 +1399,7 @@ class A {
       "More flexible and reusable code",
       "Code that is protected from extension by other classes"
     ],
-    correct: 2, // Represents C and D are correct
+    correct: [2, 3],
     explanation: "Polymorphism allows for writing code that can work with objects of multiple types, making the code more flexible, reusable, and dynamic (as the actual method to be executed is determined at runtime)."
   },
 
