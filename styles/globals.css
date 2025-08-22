@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .quiz-container {
+    @apply min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4;
+  }
+  
+  .question-card {
+    @apply bg-white rounded-xl shadow-lg border border-gray-200 p-8 max-w-4xl mx-auto;
+  }
+  
+  .option-button {
+    @apply w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-exam-blue hover:bg-blue-50 transition-all duration-200 mb-3;
+  }
+  
+  .option-selected {
+    @apply border-exam-blue bg-blue-50 text-exam-blue font-medium;
+  }
+  
+  .option-correct {
+    @apply border-exam-green bg-green-50 text-exam-green;
+  }
+  
+  .option-incorrect {
+    @apply border-exam-red bg-red-50 text-exam-red;
+  }
+  
+  .progress-bar {
+    @apply w-full bg-gray-200 rounded-full h-3;
+  }
+  
+  .progress-fill {
+    @apply bg-gradient-to-r from-exam-blue to-blue-600 h-3 rounded-full transition-all duration-300;
+  }
+  
+  .btn-primary {
+    @apply bg-exam-blue hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-3 px-8 rounded-lg transition-colors duration-200;
+  }
+  
+  .result-card {
+    @apply bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-6;
+  }
+  
+  .topic-progress-bar {
+    @apply w-full bg-gray-200 rounded-full h-2;
+  }
+}
