@@ -48,10 +48,34 @@ export default function Quiz() {
   }
 
   const handleAnswerSelect = (questionId, answerIndex) => {
-    setAnswers(prev => ({
-      ...prev,
-      [questionId]: answerIndex
-    }))
+    const question = questions.find(q => q.id === questionId)
+    const isMultiple = Array.isArray(question.correct)
+
+    setAnswers(prev => {
+      const current = prev[questionId]
+
+      if (isMultiple) {
+        let selections = Array.isArray(current) ? [...current] : []
+
+        if (selections.includes(answerIndex)) {
+          selections = selections.filter(i => i !== answerIndex)
+        } else {
+          const maxSelections = question.correct.length
+          if (selections.length < maxSelections) {
+            selections.push(answerIndex)
+          }
+        }
+
+        if (selections.length === 0) {
+          const { [questionId]: _, ...rest } = prev
+          return rest
+        }
+
+        return { ...prev, [questionId]: selections }
+      }
+
+      return { ...prev, [questionId]: answerIndex }
+    })
   }
 
   const handleNext = () => {
@@ -83,7 +107,9 @@ export default function Quiz() {
   }
 
   const getAnsweredCount = () => {
-    return Object.keys(answers).length
+    return Object.values(answers).filter(ans =>
+      Array.isArray(ans) ? ans.length > 0 : ans !== undefined
+    ).length
   }
 
   const getUnansweredQuestions = () => {
@@ -206,23 +232,30 @@ export default function Quiz() {
 
               {/* Options */}
               <div className="space-y-3 mb-8">
-                {currentQuestion.options.map((option, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleAnswerSelect(currentQuestion.id, index)}
-                    className={`
-                      option-button text-base
-                      ${answers[currentQuestion.id] === index ? 'option-selected' : ''}
-                    `}
-                  >
-                    <div className="flex items-center">
-                      <span className="w-6 h-6 rounded-full border-2 border-current mr-3 flex items-center justify-center text-sm font-bold">
-                        {String.fromCharCode(65 + index)}
-                      </span>
-                      <span>{option}</span>
-                    </div>
-                  </button>
-                ))}
+                {currentQuestion.options.map((option, index) => {
+                  const answer = answers[currentQuestion.id]
+                  const isSelected = Array.isArray(answer)
+                    ? answer.includes(index)
+                    : answer === index
+
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => handleAnswerSelect(currentQuestion.id, index)}
+                      className={`
+                        option-button text-base
+                        ${isSelected ? 'option-selected' : ''}
+                      `}
+                    >
+                      <div className="flex items-center">
+                        <span className="w-6 h-6 rounded-full border-2 border-current mr-3 flex items-center justify-center text-sm font-bold">
+                          {String.fromCharCode(65 + index)}
+                        </span>
+                        <span>{option}</span>
+                      </div>
+                    </button>
+                  )
+                })}
               </div>
 
               {/* Navigation */}

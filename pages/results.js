@@ -27,8 +27,12 @@ export default function Results() {
 
     questions.forEach(question => {
       const userAnswer = answers[question.id]
-      const isCorrect = userAnswer === question.correct
-      
+      const isCorrect = Array.isArray(question.correct)
+        ? Array.isArray(userAnswer) &&
+          userAnswer.length === question.correct.length &&
+          userAnswer.every(ans => question.correct.includes(ans))
+        : userAnswer === question.correct
+
       if (isCorrect) correctAnswers++
 
       // Initialize topic stats
@@ -43,8 +47,7 @@ export default function Results() {
       reviewData.push({
         ...question,
         userAnswer,
-        isCorrect,
-        selectedOption: userAnswer !== undefined ? question.options[userAnswer] : 'Not answered'
+        isCorrect
       })
     })
 
@@ -61,7 +64,9 @@ export default function Results() {
       totalScore,
       correctAnswers,
       totalQuestions,
-      answeredQuestions: Object.keys(answers).length,
+      answeredQuestions: Object.values(answers).filter(ans =>
+        Array.isArray(ans) ? ans.length > 0 : ans !== undefined
+      ).length,
       timeUsed,
       topicStats,
       reviewData,
@@ -307,33 +312,42 @@ export default function Results() {
                     )}
 
                     <div className="space-y-3 mb-6">
-                      {selectedQuestion.options.map((option, index) => (
-                        <div
-                          key={index}
-                          className={`
-                            p-3 rounded-lg border-2 
-                            ${index === selectedQuestion.correct 
-                              ? 'option-correct' 
-                              : index === selectedQuestion.userAnswer && !selectedQuestion.isCorrect
-                                ? 'option-incorrect'
-                                : 'border-gray-200'
-                            }
-                          `}
-                        >
-                          <div className="flex items-center">
-                            <span className="w-6 h-6 rounded-full border-2 border-current mr-3 flex items-center justify-center text-sm font-bold">
-                              {String.fromCharCode(65 + index)}
-                            </span>
-                            <span>{option}</span>
-                            {index === selectedQuestion.correct && (
-                              <span className="ml-auto text-exam-green font-medium">✓ Correct</span>
-                            )}
-                            {index === selectedQuestion.userAnswer && !selectedQuestion.isCorrect && (
-                              <span className="ml-auto text-exam-red font-medium">✗ Your Answer</span>
-                            )}
+                      {selectedQuestion.options.map((option, index) => {
+                        const correct = Array.isArray(selectedQuestion.correct)
+                          ? selectedQuestion.correct.includes(index)
+                          : index === selectedQuestion.correct
+                        const userSelected = Array.isArray(selectedQuestion.userAnswer)
+                          ? selectedQuestion.userAnswer.includes(index)
+                          : index === selectedQuestion.userAnswer
+
+                        return (
+                          <div
+                            key={index}
+                            className={`
+                              p-3 rounded-lg border-2
+                              ${correct
+                                ? 'option-correct'
+                                : userSelected && !correct
+                                  ? 'option-incorrect'
+                                  : 'border-gray-200'
+                              }
+                            `}
+                          >
+                            <div className="flex items-center">
+                              <span className="w-6 h-6 rounded-full border-2 border-current mr-3 flex items-center justify-center text-sm font-bold">
+                                {String.fromCharCode(65 + index)}
+                              </span>
+                              <span>{option}</span>
+                              {correct && (
+                                <span className="ml-auto text-exam-green font-medium">✓ Correct</span>
+                              )}
+                              {userSelected && !correct && (
+                                <span className="ml-auto text-exam-red font-medium">✗ Your Answer</span>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        )
+                      })}
                     </div>
 
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
