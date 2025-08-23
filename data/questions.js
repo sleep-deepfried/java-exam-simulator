@@ -1193,9 +1193,22 @@ for (int i = 0; i < num.length; i++) {
     id: 47,
     topic: "Arrays",
     question: "Given the Planet class and the main method, what is the output?",
-    code: `// ... Planet class ...
+    code: `class Planet {
+    String name;
+    int moons;
+    
+    Planet(String name, int moons) {
+        this.name = name;
+        this.moons = moons;
+    }
+}
+
 public static void main(String[] args) {
-    Planet[] planets = { ... };
+    Planet[] planets = {
+        new Planet("Mercury", 0),
+        new Planet("Venus", 0),
+        new Planet("Earth", 1)
+    };
     System.out.println(planets);
     System.out.println(planets[2]);
     System.out.println(planets[2].moons);
