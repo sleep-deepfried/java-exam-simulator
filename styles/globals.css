@@ -18,6 +18,7 @@
   
   .question-card {
     @apply bg-white rounded-xl shadow-lg border border-gray-200 p-8 max-w-4xl mx-auto;
+    background-color: white !important;
     color: black !important;
   }
   
@@ -31,6 +32,7 @@
   
   .option-button {
     @apply w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-exam-blue hover:bg-blue-50 transition-all duration-200 mb-3;
+    background-color: white !important;
     color: black !important;
   }
   
