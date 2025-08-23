@@ -101,7 +101,23 @@ shirts[1][1] = "medium";`,
     id: 5,
     topic: "Methods and Encapsulation",
     question: "Given the CheckingAccount class, which three lines, when inserted independently at line n1, cause the program to print a 0 balance?",
-    code: `// In another class
+    code: `class CheckingAccount {
+    public int amount;
+    
+    public CheckingAccount(int amount) {
+        this.amount = amount;
+    }
+    
+    public int getAmount() {
+        return amount;
+    }
+    
+    public void changeAmount(int x) {
+        amount += x;
+    }
+}
+
+// In another class
 public static void main(String[] args) {
     CheckingAccount acct = new CheckingAccount((int)(Math.random()*1000));
     //line n1
