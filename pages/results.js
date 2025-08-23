@@ -304,7 +304,7 @@ export default function Results() {
                     </div>
 
                     {selectedQuestion.code && (
-                      <div className="bg-gray-900 text-gray-100 p-4 rounded-lg mb-4 overflow-x-auto">
+                      <div className="bg-white text-black border border-gray-300 p-4 rounded-lg mb-4 overflow-x-auto">
                         <pre className="text-sm font-mono whitespace-pre-wrap">
                           {selectedQuestion.code}
                         </pre>

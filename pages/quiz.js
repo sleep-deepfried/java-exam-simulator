@@ -219,14 +219,14 @@ export default function Quiz() {
 
               {/* Question */}
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                <h2 className="text-xl font-semibold text-black mb-4">
                   {currentQuestion.question}
                 </h2>
                 
                 {/* Code Block */}
                 {currentQuestion.code && (
-                  <div className="bg-gray-900 text-gray-100 p-4 rounded-lg mb-6 overflow-x-auto">
-                    <pre className="text-sm font-mono whitespace-pre-wrap">
+                  <div className="bg-white text-black border border-gray-300 p-4 rounded-lg mb-6 overflow-x-auto">
+                    <pre className="text-sm font-mono whitespace-pre-wrap text-black">
                       {currentQuestion.code}
                     </pre>
                   </div>
