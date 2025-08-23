@@ -14,7 +14,7 @@ module.exports = {
         'exam-gray': '#374151',
       },
       fontFamily: {
-        'sans': ['Inter', 'system-ui', 'sans-serif'],
+        'sans': ['Courier New', 'monospace'],
       },
     },
   },
