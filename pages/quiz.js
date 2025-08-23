@@ -8,6 +8,7 @@ export default function Quiz() {
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState({})
+  const [startTime, setStartTime] = useState(null)
 
   const [showConfirm, setShowConfirm] = useState(false)
   const [quizStarted, setQuizStarted] = useState(false)
@@ -28,6 +29,7 @@ export default function Quiz() {
       
       setQuestions(selected)
       setQuizStarted(true)
+      setStartTime(Date.now())
     }
   }, [router.query])
 
@@ -83,10 +85,13 @@ export default function Quiz() {
   }
 
   const handleSubmitQuiz = () => {
+    const endTime = Date.now()
+    const timeUsed = startTime ? Math.round((endTime - startTime) / 1000) : 0
+    
     const results = {
       answers,
       questions,
-      timeUsed: 0, // Timer removed
+      timeUsed,
       totalQuestions: questions.length
     }
     
