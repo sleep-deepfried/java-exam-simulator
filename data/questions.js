@@ -440,7 +440,7 @@ class C extends B {
   {
     id: 17,
     topic: "Arrays",
-    question: "Given the code fragment for array declaration, which code fragment, when inserted at line 3, enables the code to print 10:20?",
+    question: "Given the code fragment for array declaration, which code fragments, when inserted at line 3, enable the code to print 10:20?",
     code: `1. public class Test {
 2.  public static void main(String[] args) {
 3.      /* insert code here */
@@ -455,7 +455,8 @@ class C extends B {
       "int[] array = new int[2];",
       "int array [2];"
     ],
-    correct: 2,
+    isMultipleChoice: true,
+    correct: [1, 2], // B and C
     explanation: "Before you can assign values to the elements of an array (array[0] = 10), the array variable must be declared and the array object itself must be created (instantiated) in memory. Option A declares a variable named n, not array, so array[0] would be a compiler error. Option B correctly declares and then instantiates the array in two steps. This is a valid way to do it. Option C correctly declares and instantiates the array in a single statement. This is the most common and concise way. Option D is not valid Java syntax for creating an array object."
   },
 
