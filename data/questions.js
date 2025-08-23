@@ -741,7 +741,25 @@ System.out.println("date3 = " + date3);`,
     id: 30,
     topic: "Inheritance",
     question: "Given the three classes Base, DerivedA extends Base, and DerivedB extends DerivedA, what is the result?",
-    code: `// in DerivedB.java
+    code: `class Base {
+    public void test() {
+        System.out.print("Base ");
+    }
+}
+
+class DerivedA extends Base {
+    public void test() {
+        System.out.print("DerivedA ");
+    }
+}
+
+class DerivedB extends DerivedA {
+    public void test() {
+        System.out.print("DerivedB ");
+    }
+}
+
+// in DerivedB.java
 public static void main(String[] args) {
     Base b1 = new DerivedB();
     Base b2 = new DerivedA();
