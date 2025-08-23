@@ -1597,10 +1597,10 @@ public static void main(String[] args) {
     System.out.println(sb.toString());
 }`,
     options: [
-      "Java SE",
-      "Java  SE", 
-      "Jav a SE",
-      "Java SE "
+      '"Java SE"',
+      '"Java  SE"', 
+      '"Jav a SE"',
+      '"Java SE "' 
     ],
     correct: 1,
     explanation: "sb starts as \"Java\". append(\" SE\") makes it \"Java SE\". insert(4, \" \") inserts a space at index 4 (between 'a' and ' '), resulting in \"Java  SE\" (two spaces between Java and SE)."

@@ -38,6 +38,8 @@
   
   .option-button span {
     color: black !important;
+    white-space: pre-wrap;
+    font-family: 'Courier New', monospace;
   }
   
   .option-selected {
